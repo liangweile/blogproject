@@ -34,6 +34,7 @@
                     <a href="#">下一页</a>
                 </div>
                 -->
+		<!--
                 <div class="pagination">
                     <ul>
                         <li><a href="">1</a></li>
@@ -45,6 +46,21 @@
                         <li><a href="">8</a></li>
                         <li><a href="">...</a></li>
                         <li><a href="">11</a></li>
+                    </ul>
+                </div>
+		-->
+ 		<div class="text-center">
+                    <ul class="pagination">
+			{% if post_list.has_previous %}
+                        <li><a href="?page={{post_list.previous_page_number}}">上一页</a></li>
+			{% endif %}
+			{% if post_list.number %}
+                        <li class="active"><a href="?page={{post_list.number }}">{{ post_list.number }}</a></li>
+			{% endif%}
+			{% if post_list.has_next %}
+                        <li><a href="?page={{post_list.next_page_number}}">下一页</a></li>
+			{% endif %}
+
                     </ul>
                 </div>
 {% endblock main%}
