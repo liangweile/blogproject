@@ -21,15 +21,15 @@
 	<div class="container">
 		<div class="row clearfix">
 		<div class="col-md-12 column">
-			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
-					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="{% url 'index'%}">小君</a>
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">小君</a>
 				</div>
 
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li>
-							 <a href="{% url 'about'%}">AboutMe</a>
+							 <a href="#">AboutMe</a>
 						</li>
 						<!--<li>-->
 							 <!--<a href="#">Link</a>-->
@@ -59,9 +59,9 @@
 							</ul>
 						</li>
 					</ul>
-					<form class="navbar-form navbar-left" role="search" action="{% url 'search'%}" method="get" >
+					<form class="navbar-form navbar-left" role="search">
 						<div class="form-group">
-							<input class="form-control" type="text"  name="q"/>
+							<input class="form-control" type="text" />
 						</div> <button type="submit" class="btn btn-default">Search</button>
 					</form>
 				</div>
@@ -70,14 +70,6 @@
 		</div>
 			<!--head-->
 		</div>
-	</div>
-	<div class="jumbotron" style="text-align:center;background-color:#000000">
-		<h1 style="color:#FFFFFF">小君</h1>
-		<p style="color:#FFFFFF">人生苦短</p>
-		<p><a class="btn btn-primary btn-lg" role="button" href="https://www.github.com" target="_blank">
-			学习更多</a>
-		</p>
-	</div>
 
 		<div class="row clearfix">
 

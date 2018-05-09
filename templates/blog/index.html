@@ -1,66 +1,85 @@
 {% extends "base.html" %}
-{% block main%}
-		{% for post in post_list %}
-                <article class="post post-{{ post.pk }}">
-                    <header class="entry-header">
-                        <h1 class="entry-title">
-                            <a href="{{ post.get_absolute_url}}">{{ post.title }}</a>
-                        </h1>
-                        <div class="entry-meta">
-                            <span class="post-category"><a href="#">{{ post.category }}</a></span>
-                            <span class="post-date"><a href="#"><time class="entry-date"
-                                                                      datetime="{{ post.create_time}}">{{ post.create_time }}</time></a></span>
-                            <span class="post-author"><a href="#">{{ post.author}}</a></span>
-                            <span class="comments-link"><a href="#">4 评论</a></span>
-                            <span class="views-count"><a href="#">{{ post.views }} 阅读</a></span>
-                        </div>
-                    </header>
-                    <div class="entry-content clearfix">
-                        <p>{{ post.excerpt }}</p>
-                        <div class="read-more cl-effect-14">
-                            <a href="{{ post.get_absolute_url }}" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
-                        </div>
-                    </div>
-                </article>
-		{% empty %}
-		<div class="no-post">暂时还没有发布的文章！</div>
-		{% endfor %}
+{% load blog_tags %}
+{% block post %}
+{% if error_msg %}
+<p>{{error_msg}}</p>
+{% endif %}
+<div class="row">
+    {% for post in post_list %}
+    <div class="col-md-6">
+        <div class="well well-lg">
+            <a href="{% url 'detail' post.pk%}">
+                <header style="font-size:200% ;font-weight: bold; font-family:STKaiti">{{post.title}}</header>
+                <section>{{post.excerpt}}</section>
+            </a>
+            <footer>
+                <img class="img-circle" style="max-width:20px"
+                     src="//www.gravatar.com/avatar/d7479a703555cc76b277040e5be9b8ca?s=250&d=mm&r=x">
+                <span>
+                    <a href="{% url 'about' %}">liangweile</a>
+                    <span style="float:right">浏览量:{{post.views}}</span>
+                </span>
+            </footer>
 
-            
-                <!-- 简单分页效果
-                <div class="pagination-simple">
-                    <a href="#">上一页</a>
-                    <span class="current">第 6 页 / 共 11 页</span>
-                    <a href="#">下一页</a>
-                </div>
-                -->
-		<!--
-                <div class="pagination">
-                    <ul>
-                        <li><a href="">1</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li class="current"><a href="">6</a></li>
-                        <li><a href="">7</a></li>
-                        <li><a href="">8</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">11</a></li>
-                    </ul>
-                </div>
-		-->
- 		<div class="text-center">
-                    <ul class="pagination">
-			{% if post_list.has_previous %}
-                        <li><a href="?page={{post_list.previous_page_number}}">上一页</a></li>
-			{% endif %}
-			{% if post_list.number %}
-                        <li class="active"><a href="?page={{post_list.number }}">{{ post_list.number }}</a></li>
-			{% endif%}
-			{% if post_list.has_next %}
-                        <li><a href="?page={{post_list.next_page_number}}">下一页</a></li>
-			{% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
 
-                    </ul>
-                </div>
-{% endblock main%}
+<div class="text-center">
+    <ul class="pagination">
+        {% if post_list.has_previous %}
+        <li><a href="?page={{post_list.previous_page_number}}">上一页</a></li>
+        {% endif %}
+        {% if post_list.number %}
+        <li class="active"><a href="?page={{post_list.number }}">{{ post_list.number }}</a></li>
+        {% endif%}
+        {% if post_list.has_next %}
+        <li><a href="?page={{post_list.next_page_number}}">下一页</a></li>
+        {% endif %}
+
+    </ul>
+</div>
+{% endblock post%}
+{% block nav %}
+<div class="widget widget-recent-posts" style="height:0px;padding-bottom:50%">
+    <h4>最新文章</h4>
+    {% get_recent_posts as posts%}
+    <ul>
+        {% for post in posts%}
+        <li>
+            <a href="{% url 'detail' post.pk %}">{{post.title}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="widget widget-archives " style="height:0px;padding-bottom:50%">
+    {% archives as date_list %}
+    <h4>日期归档</h4>
+    <ul>
+        {% for date in date_list%}
+        <li>
+            <a href="{% url 'archives' date.year date.month%}">{{ date.year }}年{{ date.month }}月{{ date.day }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="widget widget-category" style="height:0px;padding-bottom:50%">
+    {% get_category as category_list %}
+    <h4>分类</h4>
+    <ul class="nav nav-pills" role="tablist">
+        {% for cate in category_list %}
+        <li role="presentation">
+            <a href="{% url 'category' cate.pk %}">{{ cate.name }}<span class="badge">{{ cate.num_post}}</span></a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="widget widget-tag" style="height:0px;padding-bottom:50%">
+    <h4>标签</h4>
+    {% get_tag as tag_list %}
+    {% for t in tag_list %}
+    <a href="{% url 'tag' t.pk %}"><span class="label label-default">{{t.name}}</span></a>
+    {% endfor %}
+</div>
+{% endblock nav %}

@@ -1,8 +1,10 @@
+# -*-coding:utf-8-*-
 from django.shortcuts import render, HttpResponse, get_object_or_404
 import markdown
 from comments.forms import CommentForm
 from .models import Post, Category, Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 # Create your views here.
 
@@ -48,3 +50,15 @@ def tag(request, pk):
     tag = get_object_or_404(Tag, pk=pk)
     post_list = Post.objects.filter(tags=tag)
     return render(request, 'blog/index.html', context={'post_list':post_list})
+
+def search(request):
+    q = request.GET.get('q')
+    error_msg = ''
+    if not q:
+        error_msg = '请输入关键词'
+        return render(request, 'blog/index.html', {'error_msg':error_msg})
+    post_list = Post.objects.filter(Q(title__icontains=q)|Q(body__icontains=q))
+    return render(request, 'blog/index.html', {'post_list':post_list,'error_msg': error_msg})
+
+def about(request):
+    return render(request, 'blog/about.html')

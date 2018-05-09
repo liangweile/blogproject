@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block post %}
+            {% if error_msg %}
+			<p>{{error_msg}}</p>
+		    {% endif %}
+            {% for post in post_list %}
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="thumbnail">
+						<img alt="300x200" src="http://ibootstrap-file.b0.upaiyun.com/lorempixel.com/600/200/people/default.jpg" />
+						<div class="caption">
+							<h3>
+								post.title
+							</h3>
+							<p>
+								post.excerpt
+							</p>
+							<p>
+								 <a class="btn btn-primary" href="#">Read</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+            {% endfor %}
+            <div class="text-center">
+                    <ul class="pagination">
+			{% if post_list.has_previous %}
+                        <li><a href="?page={{post_list.previous_page_number}}">上一页</a></li>
+			{% endif %}
+			{% if post_list.number %}
+                        <li class="active"><a href="?page={{post_list.number }}">{{ post_list.number }}</a></li>
+			{% endif%}
+			{% if post_list.has_next %}
+                        <li><a href="?page={{post_list.next_page_number}}">下一页</a></li>
+			{% endif %}
+
+                    </ul>
+            </div>
+{% endblock post%}
+{% block nav %}
+			<div class="widget widget-recent-posts">
+				<h4>最新文章</h4>
+					<ul>
+						<li>
+							category
+						</li>
+					</ul>
+			</div>
+			<div class="widget widget-archives">
+				<h4>日期归档</h4>
+					<ul>
+						<li>
+							category
+						</li>
+					</ul>
+			</div>
+			<div class="widget widget-category">
+				<h4>分类</h4>
+					<ul>
+						<li>
+							category
+						</li>
+					</ul>
+			</div>
+			<div class="widget widget-tag">
+				<span class="label label-default">标签</span>
+			</div>
+{% endblock nav %}

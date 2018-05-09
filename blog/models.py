@@ -38,7 +38,7 @@ class Post(models.Model):
              'markdown.extensions.extra',
              'markdown.extensions.codehilite',
                 ])
-        self.excerpt = strip_tags(md.convert(self.body))[:54]
+        self.excerpt = strip_tags(md.convert(self.body))[:200]
         super(Post, self).save(*args, **kwargs)
     class Meta:
         ordering = ['-create_time']
